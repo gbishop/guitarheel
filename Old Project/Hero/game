@@ -1,0 +1,22 @@
+import pygame
+from guitarEventHandler import GuitarEventHandler
+from guitarsetup import GuitarSetup
+
+
+class Game(object):
+    def __init__(self,width, height):
+        self.size = (width, size)
+        display = pygame.setmode(size)
+        self.gs = GuitarSetup()
+        self.geh = GuitarEventHandler(self.gs.setUpGuitars())
+        
+    def play(self):
+        while True:
+            self.event = pygame.event.wait()
+            if self.event.type == pygame.QUIT:
+                break
+            else
+            self.geh.handleEvent(event)
+
+g = Game(680,480)
+g.play()

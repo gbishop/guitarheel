@@ -1,0 +1,92 @@
+import pygame
+
+class Guitar(object):
+    def __init__(self, id):
+        self.guitarID = id
+        self.flag = -1
+        self.green = self.flag
+        self.red = self.flag
+        self.yellow = self.flag
+        self.blue = self.flag
+        self.orange = self.flag
+        self.nobutton = 0
+        self.twangerDown = self.flag
+        self.twangerUp = self.flag
+        self.soundList = []
+        self.buttonMap = {}
+        self.buttonDownMap = {self.clear:True}
+        self.currentButton = self.clear
+        
+        self.sound = None
+        self.channel = None
+        
+        self.maxSounds = 12
+        
+    
+    def buttonsSet(self):
+        isSet = self.green != self.flag and self.red == self.flag and self.yellow == self.flag and self.blue == self.flag and self.orange == self.flag and self.twangerdown = self.flag and self.twangerup = self.flag
+        isSet = isSet and len(SoundList) == self.maxSounds
+        return isSet
+        
+    def setGreen(self, key):
+        if(self.green == self.flag):
+            self.green = key
+            self.buttonMap.update({self.green:1})
+            self.buttonDownMap.update({self.green:False})
+    
+    def setRed(self, key):
+        if(self.red == self.flag):
+            self.red = key
+            self.buttonMap.update({self.red:2})
+            self.buttonDownMap.update({self.red:False})
+        
+    def setYellow(self, key):
+        if(self.yellow == self.flag):
+            self.yellow = key
+            self.buttonMap.update({self.yellow:3})
+            self.buttonDownMap.update({self.yellow:False})
+        
+    def setBlue(self, key):
+        if(self.blue == self.flag):
+            self.blue = key
+            self.buttonMap.update({self.blue:4})
+            self.buttonDownMap.update({self.blue:False})
+        
+    def setOrange(self, key):
+        if(self.orange == self.flag):
+            self.orange = key
+            self.buttonMap.update({self.orange:5})
+            self.buttonDownMap.update({self.orange:False})
+        
+    def setTwangerDown(self, key):
+        if(self.twangerDown == self.flag):
+            self.twangerDown = key
+        
+    def setTwangerUp(self,key):
+        if(self.twangerUp == self.flag):
+            self.twangerUp = key
+            
+    def.setSound(self, button):
+        self.sound = soundList[self.buttonMap[button]]
+        self.currentButton = button
+        
+    def clearSound(self):
+        self.fadeSound()
+        self.snd = None
+        self.currentButton = self.clear
+        
+    def clearStopSound(self):
+        self.stopSound()
+        self.sound = None
+        self.currentButton = self.clear
+        
+    def stopSound(self):
+        if self.chan:
+            self.chan.stop()
+            
+    def fadeSound(self):
+        if self.chan:
+            self.chan.fadeout(500)
+            
+    def isFretButton(self, button):
+        return button in self.buttonMap.keys()

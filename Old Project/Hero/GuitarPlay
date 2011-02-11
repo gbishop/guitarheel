@@ -1,0 +1,117 @@
+import pygame
+
+pygame.mixer.pre_init(44100, -16, 1, 512)
+
+pygame.init()
+joyBindings = [5,1,0,2,3,4,14,12,8,9]
+PowerChord = [ pygame.mixer.Sound('GuitarChord%d.ogg' % i) for i in [1,2,3,4,5,6] ]
+class GuitarPlay(object):
+    def __init__(self, controlList, control):
+        self.controller = control
+        self.clear = -1
+        self.green = controlList[0]
+        self.red = controlList[1]
+        self.yellow = controlList[2]
+        self.blue = controlList[3]
+        self.orange = controlList[4]
+        self.rock = controlList[5]
+        self.twangerDown = controlList[6]
+        self.twangerUp = controlList[7]
+        self.select = controlList[8]
+        self.start = controlList[9]
+        self.currentButton = self.clear
+        
+        self.buttonMap = { self.clear:0, self.green:1, self.red:2, self.yellow:3,  self.blue:4, self.orange:5 }
+        self.buttonDownMap = {self.clear:True, self.green:False, self.red:False, self.yellow:False, self.blue:False, self.orange:False}
+        
+    def __init__(self,controlList):
+        self.clear = -1
+        self.green = joyBindings[0]
+        self.red = joyBindings[1]
+        self.yellow = joyBindings[2]
+        self.blue = joyBindings[3]
+        self.orange = joyBindings[4]
+        self.rock = joyBindings[5]
+        self.twangerDown = joyBindings[6]
+        self.twangerUp = joyBindings[7]
+        self.select = joyBindings[8]
+        self.start = joyBindings[9]
+        self.currentButton = self.clear
+        
+        self.buttonMap = { self.clear:0, self.green:1, self.red:2, self.yellow:3,  self.blue:4, self.orange:5 }
+        self.buttonDownMap = {self.clear:True, self.green:False, self.red:False, self.yellow:False, self.blue:False, self.orange:False}
+        
+    def isGuitarEvent(self, event):
+        if pygame.JOYBUTTONDOWN == event.type or pygame.JOYBUTTONUP == event.type:
+            return isFretButton(event.button)
+        elif pygame.KEYUP == event.type or pygame.KEYDOWN == event.type:
+            return isFretButton(event.key)
+        else:
+            return false
+            
+    def isFretButton(self, button):
+        return button in self.buttonMap
+    
+    def play(self, event):
+        #Was a button pressed
+        if self.isKeyDown(event):
+            if self.isFretButton(event.button):
+                self.buttonDownMap[event.button] = True
+                if self.compareToCurrent(event.button) >= 0:
+                    self.clearSound()
+                    self.setSound(event.button)
+                
+            elif event.button == self.twangerDown:
+                self.stopSound()
+                if self.snd:
+                    self.chan = self.snd.play()
+            
+            elif event.button == self.twangerUp:
+                self.stopSound()
+                    
+        elif self.isKeyUp(event):
+                if self.isFretButton(event.button):
+                    self.buttonDownMap[event.button] = False
+                    if self.compareToCurrent(event.button) == 0:
+                        self.clearSound()
+                        for i in [self.clear, self.green, self.red, self.yellow, self.blue, self.orange]:
+                            if self.buttonDownMap[i] == True:
+                                self.setSound(i)
+                                    
+    def isKeyDown(self, event):
+        if event.type == pygame.JOYBUTTONDOWN or event.type == pygame.KEYDOWN:
+            return True
+        return False
+    
+    def isKeyUp(self, event):
+        if event.type == pygame.JOYBUTTONUP or event.type == pygame.KEYUP:
+            return true
+        return false                                    
+                                    
+    def setSound(self, button):
+        self.snd = PowerChord[self.buttonMap[button]]
+        self.currentButton = button
+        
+    def clearSound(self):
+        self.fadeSound()
+        self.snd = None
+        self.currentButton = self.green
+        
+    def clearStopSound(self):
+        self.stopSound()
+        self.snd = None
+        self.currentButton = self.green
+        
+    def stopSound(self):
+        if self.chan:
+            self.chan.stop()
+            
+    def fadeSound(self):
+        if self.chan:
+            self.chan.fadeout(500)
+            
+    def isFretButton(self, button):
+        return button in self.buttonMap
+        
+    def compareToCurrent(self, button):
+        return self.buttonMap[button] - self.buttonMap[self.currentButton]

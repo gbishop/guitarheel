@@ -1,0 +1,35 @@
+import pygame
+import sys
+pygame.mixer.pre_init(44100,-16,1,512)
+pygame.init()
+
+class PickDrumLoop(self):
+  def __init__(self):
+    self.sounds = []
+    self.maxLoops = len(self.sounds)
+  
+  def pickSound(self):
+    self.currentSound = 0
+    while True:
+      if(self.currentSound == self.maxSound):
+        self.currentSound = 0
+      elif(self.currentSound == -1):
+        self.currentSound = self.maxSound - 1
+        
+      self.sound = sounds[self.currentSound]
+      self.play()
+      self.event = pygame.event.wait()
+      if self.event.type == pygame.QUIT:
+        break
+      elif self.event.type == pygame.KEYDOWN and self.event.key = pygame.K_UP:
+        self.currentSound += 1
+      elif self.event.type == pygame.KEYDOWN and self.event.key = pygame.K_DOWN:
+        self.currentSound -= 1
+      elif self.event.type == pygame.KEYDOWN and self.event.key = pygame.RETURN:
+        return self.sounds[self.currentSound]
+        
+  def play(self):
+      if not self.channel:
+        self.channel = pygame.mixer.find_channel(False)
+      self.channel.play(self.sound)
+  
