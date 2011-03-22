@@ -1,0 +1,72 @@
+# This is the sound data file for the guiTarHeel game.
+
+# Comment lines start with a # and ignores empty lines
+
+# This file is used to map key states to sound files
+# Keys have the following names in order down the neck
+# No buttons: 'OPEN', Green: 'GREEN', Yellow: 'YELLOW', 
+# Blue: 'BLUE', Orange: 'ORANGE'
+
+# Each block begins with the instrument name. This instrument
+# name must be the same as the file name for the notes. This is
+# followed by a space and then the file containing the voice 
+# instrument name.
+# The renaming lines are defined as a single key state, followed
+# by a space, followed by the file name. The default states
+# *must* be defined. The keys are followed by a '-'
+
+# Example
+# guitar guitarname.ogg
+# OPEN open.ogg
+# GREEN green.ogg
+# RED red.ogg
+# YELLOW yellow.ogg
+# BLUE blue.ogg
+# ORANGE orange.ogg
+# -
+
+# New key states are formed by contaenating the key names
+# in order *down the neck* Open may not be included. If a
+# special note is not defined the guitar defaults to playin
+# the note for the key furthest down the fret.
+# Example
+# GREENRED greenred.ogg
+
+acoustic acoustic1.ogg
+OPEN acoustic1.ogg
+GREEN acoustic2.ogg
+RED acoustic3.ogg
+YELLOW acoustic4.ogg
+BLUE acoustic5.ogg
+ORANGE acoustic6.ogg
+-
+
+powerguitar GuitarChord1.ogg
+OPEN GuitarChord1.ogg
+GREEN GuitarChord2.ogg
+RED GuitarChord3.ogg
+YELLOW GuitarChord4.ogg
+BLUE GuitarChord5.ogg
+ORANGE GuitarChord6.ogg
+-
+
+minorguitar minor1.ogg
+OPEN minor1.ogg
+GREEN minor2.ogg
+RED minor3.ogg
+YELLOW minor4.ogg
+BLUE minor5.ogg
+ORANGE minor6.ogg
+-
+
+ukulele C.ogg
+OPEN C.ogg
+GREEN D.ogg
+RED E.ogg
+YELLOW F.ogg
+BLUE G.ogg
+ORANGE A.ogg
+GREENRED Cchord.ogg
+REDYELLOW a7.ogg
+YELLOWBLUE Fchord.ogg
+-

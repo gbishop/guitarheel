@@ -5,7 +5,7 @@
 #~ as well.
 
 import pygame
-pygame.mixer.pre_init(22050, -16, 1, 64)
+pygame.mixer.pre_init(22050, -16, 4, 64)
 pygame.init()
 
 class Guitar(object):
