@@ -6,7 +6,7 @@ Authors: Logan Wlkerson,
 
 import pygame
 
-class ChannelManager(Object):
+class ChannelManager(object):
     """Manages the handing out of sound channels
     
     Authors: Logan Wilkerson,

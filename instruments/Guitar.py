@@ -17,7 +17,8 @@ class Guitar(object):
         """ Constructor for Guitar
         
         sound_box -- the AdvGuitarSoundBox for this guitar
-        button_map -- a mapping of numbers to the associated joystick button
+        button_map -- a mapping of numbers to the associated joystick 
+        button
         name -- the name of the joystick. If this is a keyboard based
         guitar leave this parameter out
         """
@@ -40,11 +41,12 @@ class Guitar(object):
             }
     
     def handleEvent(self, evt):
-        """ Takes in an event and handles it. A TWANGERDOWN or TWANGERUP down event
-            will cause the guitar to play sound depending on it's current state. Other events
-            will alter this guitar's state.
+        """ Takes in an event and handles it. A TWANGERDOWN or TWANGERUP
+        down event will cause the guitar to play sound depending on it's
+        current state. Other events will alter this guitar's state. The 
+        method returns either None, or the button pressed.
         
-            evt -- the evt to be handled            
+        evt -- the evt to be handled            
         """
         if self.name == 'KEYBOARD':
             if evt.key in self.button_map:
