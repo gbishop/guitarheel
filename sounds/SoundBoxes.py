@@ -6,6 +6,7 @@ Authors: Logan Wilkerson,
 """
 import pygame
 from datautilities.DataConstants import Constants
+from sounds.ChannelManager import ChannelManager
 import time
 
 class GuitarSoundBox(object):
@@ -56,7 +57,7 @@ class AdvGuitarSoundBox(object):
     5: Constants.ORANGE,
     }
     
-    def __init__(self, file_name, sound_list):
+    def __init__(self, file_name, sound_list, channel_manager = None):
         """ Constructor for AdvGuitarSoundBox
         
         file_name -- the file name for the instrument this "guitar" relates too
@@ -66,7 +67,10 @@ class AdvGuitarSoundBox(object):
         dir = 'notes/' + file_name + '/'
         for key in sound_list:
             self.sound_map[key] = pygame.mixer.Sound(dir + sound_list[key])
-        self.channel = pygame.mixer.find_channel()
+        if channel_manager is None:
+            self.channel = pygame.mixer.find_channel()
+        else:
+            self.channel = channel_manager.reserveChannel(self)
         
     def determine_note(self, states):
         count = 0

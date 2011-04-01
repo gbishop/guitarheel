@@ -13,8 +13,9 @@ class AbstractGame(object):
     
     Authors: Logan Wilkerson,
     """
-    running_status = 'RUNNING'
-    end_status = 'END'
+    def __init__(self):
+        self.running_status = 'RUNNING'
+        self.end_status = 'END'
     def update(self, evt=None):
         """The update method for a game. The update method may take in
         an event. The game loop should also call the update method at
@@ -35,3 +36,9 @@ class AbstractGame(object):
         evt -- a user event
         """
         raise NotImplementedError("This method has not been implemented")
+        
+    def getRunningStatus(self):
+        return self.running_status
+        
+    def getEndStatus(self):
+        return self.end_status

@@ -5,6 +5,7 @@ from sounds.ChannelManager import ChannelManager
 from sounds.SoundBoxes import AdvGuitarSoundBox
 from sounds.SoundBoxes import InstrumentNameSoundBox
 from instruments.Guitar import Guitar
+from games.Games import TwoPlayerFreePlay
 import time
 
 pygame.mixer.init(44100, -16, 8, 512)
@@ -16,10 +17,10 @@ class Game(object):
         display = pygame.display.set_mode(self.size)
         
     def play(self):
-        cm = ChannelManager(7)
-        a = ' '
-        c = cm.reserveChannel(a)
-        cm.printinfo()
+        game  = TwoPlayerFreePlay(' ', ' ', ' ')
+        print game.running_status
+        print game.end_status
+        
 
 g = Game()
 g.play()
