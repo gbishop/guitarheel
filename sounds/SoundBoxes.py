@@ -71,8 +71,15 @@ class AdvGuitarSoundBox(object):
             self.channel = pygame.mixer.find_channel()
         else:
             self.channel = channel_manager.reserveChannel(self)
+    
+    def getNotes(self):
+        return self.sound_map.keys()
         
     def determine_note(self, states):
+        """Determine the actual note of the guitar
+        
+        states -- the guitar states
+        """
         count = 0
         last_button_down = Constants.OPEN
         state_string = ''
@@ -105,6 +112,14 @@ class AdvGuitarSoundBox(object):
             is down and a 0 otherwise.
         """
         self.channel.play(self.sound_map[self.determine_note(states)])
+    
+    def playNote(self, note):
+        """Plays the sound associated with the guitar note
+        
+        note -- the note to play
+        """
+        if note in self.sound_map:
+            self.channel.play(self.sound_map[note])
         
     def fadeout(self, fade_time=500):
         self.channel.fadeout(fade_time)

@@ -117,3 +117,8 @@ class Guitar(object):
         """
         return self.sound_box.determine_note(self.states)
             
+    def getNotes(self):
+        return self.sound_box.getNotes()
+        
+    def playNote(self, note):
+        self.sound_box.playNote(note)

@@ -1,4 +1,7 @@
 import pygame
+import random
+import time
+from datautilities.DataConstants import Constants
 from games.AbstractGame import AbstractGame
 from datautilities.DataConstants import Constants
 
@@ -225,3 +228,113 @@ class Horse(AbstractGame):
         self.display.blit(player2message, pos2)
         pygame.display.update()
 
+
+class SimonSays(AbstractGame):
+    """A game of Simon Says for one player
+    
+    Authors: Logan Wilkerson,
+    """
+    
+    simon_phase = 'SIMON'
+    play_phase = 'PLAY'
+    end_phase = 'END'
+    def __init__(self, channel_manager, guitar_one, start_count, display):
+        """Constructor for SimonSays
+        
+        channel_manager -- the ChannelManager for the game
+        guitar_one -- player one's guitar
+        start_count -- the starting amount of notes
+        display -- the game display
+        """
+        AbstractGame.__init__(self)
+        self.channel_manager = channel_manager
+        self.guitar = guitar_one
+        self.start_count = self.max_count = start_count
+        self.phase = SimonSays.simon_phase
+        self.display = display
+        
+        self.background = pygame.Surface(self.display.get_size())
+        self.font = pygame.font.Font(None, 30)
+        
+        self.white = (255,255,255)
+        
+        self.cur_states = []
+        self.return_states = []
+        
+        self.background.fill((0,0,0))
+        self.display.blit(self.background, (0,0))
+        pygame.display.update()
+        pygame.display.set_caption('Simon Says!')
+        self.message = self.font.render(
+                        'Please listen to the notes.',
+                        1,
+                        self.white
+                    )
+                        
+    def update(self, evt=None):
+        if evt is None:
+            return self.updateWithoutEvent()
+        else:
+            return self.updateWithEvent(evt)
+            
+    def updateWithEvent(self, evt):
+        if self.phase is SimonSays.play_phase:
+            if self.guitar.isEventSource(evt):
+                button = self.guitar.handleEvent(evt)
+                if button is Constants.START:
+                    return [self.end_status]
+                if self.guitar.isPlay(evt, button):
+                    self.return_states.append(self.guitar.getNote())
+                    if not self.cur_states[0:len(self.return_states)] == self.return_states:
+                        self.message = self.font.render(
+                                        'That\'s wrong. You lose. You got %i points.' % (len(self.cur_states) - 1),
+                                        1,
+                                        self.white
+                                    )
+                        self.phase = SimonSays.end_phase
+                    elif len(self.return_states) is len(self.cur_states):
+                        self.message = self.font.render(
+                                        'Very good player!',
+                                        1,
+                                        self.white,
+                                    )
+                        self.return_states = []
+                        self.phase = SimonSays.simon_phase
+        if self.phase is SimonSays.end_phase:
+            button = self.guitar.handleEvent(evt)
+            if button is Constants.START:
+                return [self.end_status]
+                
+        return [self.running_status]
+        
+    def updateWithoutEvent(self):
+        self.display.blit(self.background, (0,0))
+        pos = self.message.get_rect(
+                centerx = self.display.get_width() / 2,
+                centery = self.display.get_height() / 2,
+            )
+        self.display.blit(self.message, pos)
+        pygame.display.update()
+        if self.phase is SimonSays.simon_phase:
+            self.runSimonPhase()
+        return [self.running_status]
+        
+    def runSimonPhase(self):
+        time.sleep(1)
+        nextNote = random.choice(self.guitar.getNotes())
+        self.cur_states.append(nextNote)
+        while len(self.cur_states) < self.start_count:
+            nextNote = random.choice(self.guitar.getNotes())
+            self.cur_states.append(nextNote)
+        channel = self.guitar.getSoundBox().channel
+        print self.cur_states
+        for note in self.cur_states:
+            self.guitar.playNote(note)
+            while channel.get_busy():
+                events = pygame.event.get()
+                for evt in events:
+                    if self.guitar.isEventSource(evt):
+                        self.guitar.handleEvent(evt, False)
+        self.phase = SimonSays.play_phase
+        self.message = self.font.render('Now play it back.', 1, self.white)
+        
