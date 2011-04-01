@@ -40,7 +40,7 @@ class Guitar(object):
             Constants.ORANGE: 0,
             }
     
-    def handleEvent(self, evt):
+    def handleEvent(self, evt, play=True):
         """ Takes in an event and handles it. A TWANGERDOWN or TWANGERUP
         down event will cause the guitar to play sound depending on it's
         current state. Other events will alter this guitar's state. The 
@@ -57,7 +57,8 @@ class Guitar(object):
             button = self.button_map[evt.button]
         if evt.type == self.down_event:
             if button == Constants.TWANGERDOWN or button == Constants.TWANGERUP:
-                self.sound_box.play(self.states)
+                if play:
+                    self.sound_box.play(self.states)
             else:
                 if button in self.states:
                     self.states[button] = 1
