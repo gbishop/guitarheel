@@ -41,9 +41,9 @@ class MainGame(object):
         
         while True:
             running = True
-            game = TwoPlayerFreePlay(channel_manager, guitar_one, guitar_two)
+            #game = TwoPlayerFreePlay(channel_manager, guitar_one, guitar_two)
             #game = Horse(channel_manager, guitar_one, guitar_two, 1, self.display)
-            #game = SimonSays(channel_manager, guitar_two, 1, self.display)
+            game = SimonSays(channel_manager, guitar_two, 1, self.display)
             while running:
                 events = pygame.event.get()
                 for event in events:
