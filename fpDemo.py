@@ -21,27 +21,29 @@ class MainGame(object):
         channel_manager = ChannelManager(6)
         
         GSB_one = AdvGuitarSoundBox(
-                    'minorguitar',
-                    data['minorguitar'],
+                    'electricguitar',
+                    data['electricguitar'],
                     channel_manager
                     )
         GSB_two = AdvGuitarSoundBox(
-                    'minorguitar',
-                    data['minorguitar'],
+                    'electricguitar',
+                    data['electricguitar'],
                     channel_manager
                     )
                     
         joy = pygame.joystick.Joystick(0)
         joy.init()
-        guitar_one = Guitar(GSB_one, Constants.KEYBOARD_GUITAR_MAP)
+        joy2 = pygame.joystick.Joystick(2)
+        joy2.init()
+        #guitar_one = Guitar(GSB_one, Constants.KEYBOARD_GUITAR_MAP)
         guitar_two = Guitar(GSB_two, Constants.TEST_GUITAR_MAP, joy.get_name(), 0)
-        
+        guitar_one = Guitar(GSB_one, Constants.TEST_GUITAR_MAP, joy.get_name(), 2)
         
         while True:
             running = True
-            #game = TwoPlayerFreePlay(channel_manager, guitar_one, guitar_two)
+            game = TwoPlayerFreePlay(channel_manager, guitar_one, guitar_two)
             #game = Horse(channel_manager, guitar_one, guitar_two, 1, self.display)
-            game = SimonSays(channel_manager, guitar_one, 1, self.display)
+            #game = SimonSays(channel_manager, guitar_two, 1, self.display)
             while running:
                 events = pygame.event.get()
                 for event in events:

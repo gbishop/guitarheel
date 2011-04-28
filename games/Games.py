@@ -4,6 +4,7 @@ import time
 from datautilities.DataConstants import Constants
 from games.AbstractGame import AbstractGame
 from datautilities.DataConstants import Constants
+from tts import TextToSpeech as tts
 
 class TwoPlayerFreePlay(AbstractGame):
     """A free play game for Two Players
@@ -265,8 +266,9 @@ class SimonSays(AbstractGame):
         self.display.blit(self.background, (0,0))
         pygame.display.update()
         pygame.display.set_caption('Simon Says!')
+        text = 'Please listen to the notes.'
         self.message = self.font.render(
-                        'Please listen to the notes.',
+                        text,
                         1,
                         self.white
                     )
@@ -286,15 +288,17 @@ class SimonSays(AbstractGame):
                 if self.guitar.isPlay(evt, button):
                     self.return_states.append(self.guitar.getNote())
                     if not self.cur_states[0:len(self.return_states)] == self.return_states:
+                        text = 'That\'s wrong. You lose. You got %i points.' % ((len(self.cur_states) - 1) * 31415)
                         self.message = self.font.render(
-                                        'That\'s wrong. You lose. You got %i points.' % ((len(self.cur_states) - 1) * 31415),
+                                        text,
                                         1,
                                         self.white
                                     )
                         self.phase = SimonSays.end_phase
                     elif len(self.return_states) is len(self.cur_states):
+                        text = 'Very good player! Now listen to the notes'
                         self.message = self.font.render(
-                                        'Very good player!',
+                                        text,
                                         1,
                                         self.white,
                                     )
@@ -336,5 +340,6 @@ class SimonSays(AbstractGame):
                     if self.guitar.isEventSource(evt):
                         self.guitar.handleEvent(evt, False)
         self.phase = SimonSays.play_phase
-        self.message = self.font.render('Now play it back.', 1, self.white)
+        text = 'Now play it back.'
+        self.message = self.font.render(text, 1, self.white)
         
