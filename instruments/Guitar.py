@@ -56,6 +56,14 @@ class Guitar(object):
         """
         if not self.isEventSource(evt):
             return None
+            
+        if evt.type is pygame.JOYAXISMOTION:
+            if evt.value is not 0:
+                evt = pygame.event.Event(pygame.JOYBUTTONDOWN, joy = evt.joy, button = Constants.TWANGERUP)
+            else:
+                evt = pygame.event.Event(pygame.JOYBUTTONUP, joy = evt.joy, button = Constants.TWANGERUP)
+        
+        #print evt
         if self.name is 'KEYBOARD':
             if evt.key in self.button_map:
                 button = self.button_map[evt.key]

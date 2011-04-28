@@ -66,7 +66,8 @@ class AdvGuitarSoundBox(object):
         self.sound_map = {}
         dir = 'notes/' + file_name + '/'
         for key in sound_list:
-            self.sound_map[key] = pygame.mixer.Sound(dir + sound_list[key])
+            if not key == Constants.SPOKEN_NAME:
+                self.sound_map[key] = pygame.mixer.Sound(dir + sound_list[key])
         if channel_manager is None:
             self.channel = pygame.mixer.find_channel()
         else:

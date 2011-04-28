@@ -31,10 +31,10 @@ class MainGame(object):
                     channel_manager
                     )
                     
-        #joy = pygame.joystick.Joystick(0)
-        #joy.init()
+        joy = pygame.joystick.Joystick(0)
+        joy.init()
         guitar_one = Guitar(GSB_one, Constants.KEYBOARD_GUITAR_MAP)
-        #guitar_two = Guitar(GSB_two, Constants.TEST_GUITAR_MAP, joy.get_name(), 0)
+        guitar_two = Guitar(GSB_two, Constants.TEST_GUITAR_MAP, joy.get_name(), 0)
         
         
         while True:

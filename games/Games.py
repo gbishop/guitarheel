@@ -287,7 +287,7 @@ class SimonSays(AbstractGame):
                     self.return_states.append(self.guitar.getNote())
                     if not self.cur_states[0:len(self.return_states)] == self.return_states:
                         self.message = self.font.render(
-                                        'That\'s wrong. You lose. You got %i points.' % (len(self.cur_states) - 1),
+                                        'That\'s wrong. You lose. You got %i points.' % ((len(self.cur_states) - 1) * 31415),
                                         1,
                                         self.white
                                     )

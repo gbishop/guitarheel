@@ -56,7 +56,8 @@ class Game(object):
         
         while not evt.type == pygame.QUIT:
             evt = pygame.event.wait()
-            if evt.type == pygame.JOYBUTTONDOWN or evt.type == pygame.JOYBUTTONUP:
+           # print evt
+            if evt.type == pygame.JOYBUTTONDOWN or evt.type == pygame.JOYBUTTONUP or evt.type == pygame.JOYAXISMOTION:
                guitars[evt.joy].handleEvent(evt)
             if evt.type == pygame.KEYDOWN or evt.type == pygame.KEYUP:
                 guitars['K'].handleEvent(evt)
