@@ -1,0 +1,1 @@
+This is a game written in python that takes advantage of the guitar hero controller for its game play. The game is designed with the handicap in mind and will contain a number of music mini-games.
